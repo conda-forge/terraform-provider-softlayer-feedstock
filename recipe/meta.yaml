@@ -3,18 +3,18 @@
 {% set version = "0.0.1" %}
 
 {% set name = goname.split('/')[-1] %}
+{% set pkg_src = ('gopath/src/'+goname).replace("/",os.sep) %}
 
 {% set x4_plugin = name + '_v' + version + "_x4" %}
-
-{% set sha256 = "a45158689a21cc0c468d4c0d912e8a4feffd0504d84ed6e3cf10d6a5f61fc436" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://{{ goname }}/archive/v{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  - folder: {{ pkg_src }}
+    url: https://{{ goname }}/archive/v{{ version }}.tar.gz
+    sha256: a45158689a21cc0c468d4c0d912e8a4feffd0504d84ed6e3cf10d6a5f61fc436
 
 
 build:
@@ -48,7 +48,7 @@ test:
 about:
   home: https://www.terraform.io
   license: MPL-2.0
-  license_file: LICENSE
+  license_file: {{ pkg_src }}/LICENSE
   summary: The Terraform {{ provider }} provider
   doc_url: https://www.terraform.io/docs/providers/{{ provider|lower }}/index.html
   dev_url: https://github.com/terraform-providers/{{ name }}
